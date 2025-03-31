@@ -92,7 +92,7 @@ const Countries = ({ CountriesPromise }) => {
                         alt="Visited country flag"
                         className="w-10 h-6 object-cover border border-gray-200 rounded shadow-sm group-hover:scale-110 transition-transform"
                       />
-                      <div className="absolute inset-0  bg-opacity-0 group-hover:bg-opacity-20 rounded transition-all"></div>
+                      <div className="absolute inset-0 bg-opacity-0 group-hover:bg-opacity-20 rounded transition-all"></div>
                     </div>
                   ))}
                 </div>

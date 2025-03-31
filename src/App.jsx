@@ -1,18 +1,56 @@
-import { Suspense } from "react";
+import { Suspense, useState } from "react";
 import "./App.css";
 import Countries from "./components/Countries/Countries";
+import WorldMapTracker from "./components/WorldMapTracker/WorldMapTracker";
 
 const CountriesPromise = fetch("https://restcountries.com/v3.1/all").then(
   (res) => res.json()
 );
 
 function App() {
+  const [activeTab, setActiveTab] = useState("map"); // 'map' or 'list'
+
   return (
-    <>
-      <Suspense fallback={<LoadingScreen />}>
-        <Countries CountriesPromise={CountriesPromise}></Countries>
-      </Suspense>
-    </>
+    <div className="min-h-screen bg-gray-50">
+      <div className="container mx-auto px-4 py-8">
+        {/* Tab Navigation */}
+        <div className="flex border-b border-gray-200 mb-8">
+          <button
+            className={`py-4 px-6 font-medium text-sm focus:outline-none ${
+              activeTab === "map"
+                ? "border-b-2 border-blue-500 text-blue-600"
+                : "text-gray-500 hover:text-gray-700"
+            }`}
+            // onClick={() => setActiveTab("map")}
+            onClick={() => {
+              console.log("Map button clicked");
+              setActiveTab("map");
+            }}
+          >
+            World Map View
+          </button>
+          <button
+            className={`py-4 px-6 font-medium text-sm focus:outline-none ${
+              activeTab === "list"
+                ? "border-b-2 border-blue-500 text-blue-600"
+                : "text-gray-500 hover:text-gray-700"
+            }`}
+            onClick={() => setActiveTab("list")}
+          >
+            Country List View
+          </button>
+        </div>
+
+        {/* Tab Content */}
+        <Suspense fallback={<LoadingScreen />}>
+          {activeTab === "map" ? (
+            <WorldMapTracker />
+          ) : (
+            <Countries CountriesPromise={CountriesPromise} />
+          )}
+        </Suspense>
+      </div>
+    </div>
   );
 }
 
